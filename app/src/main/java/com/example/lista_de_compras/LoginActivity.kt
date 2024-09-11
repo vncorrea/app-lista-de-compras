@@ -1,5 +1,6 @@
 package com.example.lista_de_compras
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lista_de_compras.databinding.ActivityLoginBinding
@@ -12,5 +13,23 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            if (email == "admin@admin.com" && password == "admin") {
+
+            } else {
+                binding.etEmail.error = "Email ou senha inválidos"
+                binding.etPassword.error = "Email ou senha inválidos"
+            }
+        }
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 }
