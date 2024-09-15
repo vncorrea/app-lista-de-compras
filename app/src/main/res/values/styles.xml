@@ -1,0 +1,6 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <style name="ButtonOutline">
+        <item name="android:textColor">@color/design_default_color_secondary_variant</item>
+    </style>
+</resources>
