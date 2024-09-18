@@ -1,12 +1,12 @@
 class AuthRepository {
 
-    private val mockUser = User("admin@admin.com", "admin");
+    private val mockUser = User("user123", "password123")
 
-    fun login(email: String, password: String) {
-        if (email == mockUser.email && password == mockUser.password) {
-            Result.Success(mockUser);
+    fun login(email: String, password: String): Result<User> {
+        return if (email == mockUser.email && password == mockUser.password) {
+            Result.Success(mockUser)
+        } else {
+            Result.Error("Usuário ou senha incorretos")
         }
-
-        Result.Error("Email ou senha inválidos");
     }
 }
