@@ -3,7 +3,7 @@ package com.example.lista_de_compras.ui.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lista_de_compras.RegisterActivity
+import com.example.lista_de_compras.ui.register.RegisterActivity
 import com.example.lista_de_compras.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
