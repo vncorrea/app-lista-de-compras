@@ -18,18 +18,21 @@ class ProdutoItemRepository {
     }
 
     fun update(produtoItem: ProdutoItem): Result<ProdutoItem> {
-        val index = this.produtoItem.indexOfFirst { it.getNome() == produtoItem.getNome() }
-        this.produtoItem[index] = produtoItem
-
-        return Result.success(produtoItem)
+        val index = this.produtoItem.indexOfFirst { it.nome == produtoItem.nome }
+        if (index != -1) {
+            this.produtoItem[index] = produtoItem
+            return Result.success(produtoItem)
+        }
+        return Result.failure(Exception("Produto não encontrado"))
     }
+
 
     fun getAll(): List<ProdutoItem> {
         return this.produtoItem
     }
 
     fun getByName(nome: String): ProdutoItem? {
-        return this.produtoItem.find { it.getNome() == nome }
+        return this.produtoItem.find { it.nome == nome }
     }
 
     fun getByCategory(categoria: String): List<ProdutoItem> {

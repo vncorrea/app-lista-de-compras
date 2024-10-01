@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     binding.progressBar.visibility = View.GONE
                     binding.btnRegister.isEnabled = true
-                    
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.loadingOverlay.visibility = View.GONE
                     }, 1000)

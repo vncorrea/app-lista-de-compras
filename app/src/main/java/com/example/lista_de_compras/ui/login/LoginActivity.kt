@@ -1,5 +1,6 @@
 package com.example.lista_de_compras.ui.login
 
+import com.example.lista_de_compras.ui.lista_produtos.ListaProdutosActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,9 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etPassword.text.toString()
 
             if (email == "admin@admin.com" && password == "admin") {
+                val intent = Intent(this, ListaProdutosActivity::class.java)
 
+                startActivity(intent)
             } else {
                 binding.etEmail.error = "Email ou senha inválidos"
                 binding.etPassword.error = "Email ou senha inválidos"
