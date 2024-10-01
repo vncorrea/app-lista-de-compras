@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lista_de_compras.data.model.ProdutoItem
+import com.example.lista_de_compras.data.model.ProdutoItemCategoria
 import com.example.lista_de_compras.databinding.ActivityListaProdutosBinding
 
 class ListaProdutosActivity: AppCompatActivity() {
@@ -21,14 +22,15 @@ class ListaProdutosActivity: AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = produtoAdapter
 
-        produtos.add(ProdutoItem("Arroz", 2, "kg", false))
-        produtos.add(ProdutoItem("Feijão", 1, "kg", true))
-        produtos.add(ProdutoItem("Macarrão", 500, "g", false))
+        val categorias = ProdutoItemCategoria.createCategorias()
+        produtos.add(ProdutoItem("Maçã", 2, "unidade", false, categorias[0]))
+        produtos.add(ProdutoItem("Feijão", 1, "kg", false, categorias[5]))
+        produtos.add(ProdutoItem("Macarrão", 500, "g", false, categorias[5]))
 
         produtoAdapter.notifyDataSetChanged()
-        
+
         binding.addButton.setOnClickListener {
-            produtos.add(ProdutoItem("Novo Produto", 1, "unidade", false))
+            produtos.add(ProdutoItem("Novo Produto", 1, "unidade", false, categorias[0]))
             produtoAdapter.notifyItemInserted(produtos.size - 1)
         }
     }
