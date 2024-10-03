@@ -1,12 +1,12 @@
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lista_de_compras.data.model.ProdutoItem
 import com.example.lista_de_compras.databinding.ActivityProdutosBinding
 
-
 class ProdutoAdapter(
-    private val produtos: MutableList<ProdutoItem>,
+    private var produtos: MutableList<ProdutoItem>,
     private val onCheckChange: (ProdutoItem) -> Unit
 ) : RecyclerView.Adapter<ProdutoAdapter.ProdutoViewHolder>() {
 
@@ -20,7 +20,6 @@ class ProdutoAdapter(
 
             binding.itemCheck.isChecked = produto.isChecked
 
-            // Adicionar o novo listener
             binding.itemCheck.setOnCheckedChangeListener { _, isChecked ->
                 produto.isChecked = isChecked
                 onCheckChange(produto)
@@ -39,6 +38,10 @@ class ProdutoAdapter(
     }
 
     override fun getItemCount(): Int = produtos.size
+
+    fun updateList(newList: List<ProdutoItem>) {
+        produtos.clear()
+        produtos.addAll(newList)
+        notifyDataSetChanged()
+    }
 }
-
-

@@ -42,12 +42,13 @@
         android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Quantidade e Unidade em um LinearLayout -->
+
     <LinearLayout
         android:id="@+id/llQuantidade"
         android:layout_width="0dp"
@@ -59,7 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="8dp">
 
-        <!-- Quantidade -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:padding="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Unidade -->
+
         <Spinner
             android:id="@+id/spUnidade"
             android:layout_width="0dp"

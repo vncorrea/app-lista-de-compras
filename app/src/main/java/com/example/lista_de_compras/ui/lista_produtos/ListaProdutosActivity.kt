@@ -1,50 +1,64 @@
 package com.example.lista_de_compras.ui.lista_produtos
 
 import ProdutoAdapter
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lista_de_compras.data.model.ProdutoItem
-import com.example.lista_de_compras.data.model.ProdutoItemCategoria
 import com.example.lista_de_compras.databinding.ActivityListaProdutosBinding
+import com.example.lista_de_compras.ui.produto_item.CriarProdutoItemActivity
+import com.example.lista_de_compras.viewmodel.ProdutoItemListaViewModel
 
 class ListaProdutosActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListaProdutosBinding
     private lateinit var produtoAdapter: ProdutoAdapter
-    private val produtos = mutableListOf<ProdutoItem>()
+    private lateinit var viewModel: ProdutoItemListaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListaProdutosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        produtoAdapter = ProdutoAdapter(produtos) { produto ->
+        // Inicializa o ViewModel
+        viewModel = ViewModelProvider(this).get(ProdutoItemListaViewModel::class.java)
+
+        produtoAdapter = ProdutoAdapter(mutableListOf()) { produto ->
             ordenarProdutosPorCheck()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = produtoAdapter
 
-        val categorias = ProdutoItemCategoria.createCategorias()
-        produtos.add(ProdutoItem("Maçã", 2, "unidade", false, categorias[0]))
-        produtos.add(ProdutoItem("Feijão", 1, "kg", false, categorias[5]))
-        produtos.add(ProdutoItem("Macarrão", 500, "g", false, categorias[5]))
+        viewModel.produtos.observe(this) { produtos ->
+            produtoAdapter.updateList(produtos)
+        }
 
-        produtoAdapter.notifyDataSetChanged()
+        viewModel.getProdutos()
 
         binding.addButton.setOnClickListener {
-            produtos.add(ProdutoItem("Novo Produto", 1, "unidade", false, categorias[0]))
-            produtoAdapter.notifyItemInserted(produtos.size - 1)
+            val intent = Intent(this, CriarProdutoItemActivity::class.java)
+            resultLauncher.launch(intent)
         }
     }
 
-    fun ordenarProdutosPorCheck() {
-        binding.recyclerView.post {
-            produtos.sortBy { it.isChecked }
-            produtoAdapter.notifyDataSetChanged()
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.let { data ->
+                    val novoProduto = data.getSerializableExtra("novo_produto") as ProdutoItem
+                    viewModel.adicionarProduto(novoProduto)
+                    viewModel.getProdutos()
+                }
+            }
+        }
+
+    private fun ordenarProdutosPorCheck() {
+        viewModel.produtos.value?.let { produtos ->
+            val produtosOrdenados = produtos.sortedBy { it.isChecked }
+            produtoAdapter.updateList(produtosOrdenados)
         }
     }
 }
-
-

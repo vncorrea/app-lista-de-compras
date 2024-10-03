@@ -1,20 +1,25 @@
-package com.example.lista_de_compras.data.model
+import java.io.Serializable
 
-class ProdutoItemCategoria(val nome: String) {
+class ProdutoItemCategoria(val nome: String): Serializable {
 
     companion object {
+        private val categorias: List<ProdutoItemCategoria> by lazy {
+            createCategorias()
+        }
+
         fun createCategorias(): List<ProdutoItemCategoria> {
-            //quero icon de cada tipo de categoria
+            return listOf(
+                ProdutoItemCategoria("Fruta"),
+                ProdutoItemCategoria("Verdura"),
+                ProdutoItemCategoria("Carne"),
+                ProdutoItemCategoria("Cereal"),
+                ProdutoItemCategoria("Laticínio"),
+                ProdutoItemCategoria("Carboidrato")
+            )
+        }
 
-            val categorias = mutableListOf<ProdutoItemCategoria>()
-            categorias.add(ProdutoItemCategoria("Fruta"))
-            categorias.add(ProdutoItemCategoria("Verdura"))
-            categorias.add(ProdutoItemCategoria("Carne"))
-            categorias.add(ProdutoItemCategoria("Cereal"))
-            categorias.add(ProdutoItemCategoria("Laticínio"))
-            categorias.add(ProdutoItemCategoria("Carboidrato"))
-
-            return categorias
+        fun findCategoria(nome: String): ProdutoItemCategoria {
+            return categorias.find { it.nome == nome } ?: throw IllegalArgumentException("Categoria não encontrada: $nome")
         }
     }
 }

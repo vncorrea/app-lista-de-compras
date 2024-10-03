@@ -1,37 +1,29 @@
 package com.example.lista_de_compras.data.repository
 
+import android.util.Log
 import com.example.lista_de_compras.data.model.ProdutoItem
 
 class ProdutoItemRepository {
-    private val produtoItem = mutableListOf<ProdutoItem>()
+    private val produtos = mutableListOf<ProdutoItem>()
 
-    fun add(produtoItem: ProdutoItem): Result<ProdutoItem> {
-        this.produtoItem.add(produtoItem)
-
-        return Result.success(produtoItem)
+    fun add(produtoItem: ProdutoItem) {
+        produtos.add(produtoItem)
+        Log.d("ProdutoItemRepository", "Produto adicionado: $produtoItem")
     }
-
-    fun remove(produtoItem: ProdutoItem): Result<ProdutoItem> {
-        this.produtoItem.remove(produtoItem)
-
-        return Result.success(produtoItem)
-    }
-
-    fun update(produtoItem: ProdutoItem): Result<ProdutoItem> {
-        val index = this.produtoItem.indexOfFirst { it.nome == produtoItem.nome }
-        if (index != -1) {
-            this.produtoItem[index] = produtoItem
-            return Result.success(produtoItem)
-        }
-        return Result.failure(Exception("Produto não encontrado"))
-    }
-
 
     fun getAll(): List<ProdutoItem> {
-        return this.produtoItem
+        Log.d("ProdutoItemRepository", "Produtos retornados: $produtos")
+        return produtos
     }
 
-    fun getByName(nome: String): ProdutoItem? {
-        return this.produtoItem.find { it.nome == nome }
+    fun remove(produtoItem: ProdutoItem) {
+        produtos.remove(produtoItem)
+    }
+
+    fun update(produtoItem: ProdutoItem) {
+        val index = produtos.indexOfFirst { it.nome == produtoItem.nome }
+        if (index != -1) {
+            produtos[index] = produtoItem
+        }
     }
 }
