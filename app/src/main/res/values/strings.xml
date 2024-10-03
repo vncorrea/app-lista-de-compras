@@ -1,17 +1,10 @@
 <resources>
     <string name="app_name">lista-de-compras</string>
-    <string name="textPlus" >+</string>
+    <string name="textPlus">+</string>
 
     <string-array name="unidades">
         <item>un</item>
         <item>kg</item>
         <item>g</item>
-    </string-array>
-
-    <string-array name="categorias">
-        <item>Fruta</item>
-        <item>Verdura</item>
-        <item>Carne</item>
-        <item>Outros</item>
     </string-array>
 </resources>

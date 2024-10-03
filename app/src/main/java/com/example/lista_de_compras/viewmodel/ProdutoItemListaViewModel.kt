@@ -29,10 +29,6 @@ class ProdutoItemListaViewModel {
         return repository.getByName(nome)
     }
 
-    fun getProdutosPorCategoria(categoria: String): List<ProdutoItem> {
-        return repository.getByCategory(categoria)
-    }
-
     fun atualizarProduto(produtoItem: ProdutoItem) {
         val result = repository.update(produtoItem)
         _produtoItemResult.value = result

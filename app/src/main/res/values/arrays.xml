@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="categorias" />
+    <string-array name="categorias">
+        <item>Fruta</item>
+        <item>Verdura</item>
+        <item>Carne</item>
+        <item>Outros</item>
+    </string-array>
 </resources>

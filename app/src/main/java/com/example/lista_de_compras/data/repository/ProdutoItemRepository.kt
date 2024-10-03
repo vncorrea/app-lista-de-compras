@@ -34,8 +34,4 @@ class ProdutoItemRepository {
     fun getByName(nome: String): ProdutoItem? {
         return this.produtoItem.find { it.nome == nome }
     }
-
-    fun getByCategory(categoria: String): List<ProdutoItem> {
-        return this.produtoItem.filter { it.getCategoria() == categoria }
-    }
 }
