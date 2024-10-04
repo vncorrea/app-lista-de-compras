@@ -14,7 +14,8 @@ class ProdutoItemCategoria(val nome: String): Serializable {
                 ProdutoItemCategoria("Carne"),
                 ProdutoItemCategoria("Cereal"),
                 ProdutoItemCategoria("Laticínio"),
-                ProdutoItemCategoria("Carboidrato")
+                ProdutoItemCategoria("Carboidrato"),
+                ProdutoItemCategoria("Outros")
             )
         }
 

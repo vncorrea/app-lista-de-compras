@@ -17,23 +17,31 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
-
-            if (email == "admin@admin.com" && password == "admin") {
-                val intent = Intent(this, ListaProdutosActivity::class.java)
-
-                startActivity(intent)
-            } else {
-                binding.etEmail.error = "Email ou senha inválidos"
-                binding.etPassword.error = "Email ou senha inválidos"
-            }
+            login()
         }
 
         binding.btnRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            register()
+        }
+    }
+
+    private fun register() {
+        val intent = Intent(this, RegisterActivity::class.java)
+
+        startActivity(intent)
+    }
+
+    private fun login() {
+        val email = binding.etEmail.text.toString()
+        val password = binding.etPassword.text.toString()
+
+        if (email == "admin@admin.com" && password == "admin") {
+            val intent = Intent(this, ListaProdutosActivity::class.java)
 
             startActivity(intent)
+        } else {
+            binding.etEmail.error = "Email ou senha inválidos"
+            binding.etPassword.error = "Email ou senha inválidos"
         }
     }
 }
