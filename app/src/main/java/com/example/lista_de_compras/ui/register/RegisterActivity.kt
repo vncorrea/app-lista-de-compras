@@ -21,23 +21,12 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener {
             if (validateInputs()) {
-                binding.loadingOverlay.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.VISIBLE
-                binding.btnRegister.isEnabled = false
-
+                showLoading(true)
                 Handler(Looper.getMainLooper()).postDelayed({
-                    binding.progressBar.visibility = View.GONE
-                    binding.btnRegister.isEnabled = true
-
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        binding.loadingOverlay.visibility = View.GONE
-                    }, 1000)
-
+                    showLoading(false)
+                    Toast.makeText(this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }, 2000)
-
-                Toast.makeText(this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
             }
         }
     }
@@ -75,5 +64,11 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         return isValid
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.loadingOverlay.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnRegister.isEnabled = !isLoading
     }
 }

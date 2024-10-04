@@ -24,26 +24,30 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(ProdutoItemListaViewModel::class.java)
+        setupRecyclerView()
+        setupObservers()
+        setupListeners()
+    }
 
-        produtoAdapter = ProdutoAdapter(mutableListOf()) { produto ->
-            ordenarProdutosPorCheck()
-        }
-
+    private fun setupRecyclerView() {
+        produtoAdapter = ProdutoAdapter(mutableListOf()) { orderableProducts() }
         produtoAdapter.onLongClick = { produto ->
             val intent = Intent(this, CriarProdutoItemActivity::class.java)
             intent.putExtra("produto_editar", produto)
             resultLauncher.launch(intent)
         }
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = produtoAdapter
+    }
 
+    private fun setupObservers() {
         viewModel.produtos.observe(this) { produtos ->
             produtoAdapter.updateList(produtos)
         }
-
         viewModel.getProdutos()
+    }
 
+    private fun setupListeners() {
         binding.addButton.setOnClickListener {
             val intent = Intent(this, CriarProdutoItemActivity::class.java)
             resultLauncher.launch(intent)
@@ -54,16 +58,16 @@ class ListaProdutosActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.let { data ->
-                    val novoProduto = data.getSerializableExtra("novo_produto") as? ProdutoItem
-                    val produtoParaEditar = data.getSerializableExtra("produto_editado") as? ProdutoItem
+                    val newProduct = data.getSerializableExtra("novo_produto") as? ProdutoItem
+                    val editableProduct = data.getSerializableExtra("produto_editado") as? ProdutoItem
 
-                    Log.d("ListaProdutosActivityNovo", "novoProduto: $novoProduto")
-                    Log.d("ListaProdutosActivityEditar", "produtoParaEditar: $produtoParaEditar")
+                    Log.d("ListaProdutosActivityNovo", "newProduct: $newProduct")
+                    Log.d("ListaProdutosActivityEditar", "editableProduct: $editableProduct")
 
-                    if (produtoParaEditar != null) {
-                        viewModel.update(produtoParaEditar)
-                    } else if (novoProduto != null) {
-                        viewModel.adicionarProduto(novoProduto)
+                    if (editableProduct != null) {
+                        viewModel.update(editableProduct)
+                    } else if (newProduct != null) {
+                        viewModel.adicionarProduto(newProduct)
                     }
 
                     viewModel.getProdutos()
@@ -71,10 +75,10 @@ class ListaProdutosActivity : AppCompatActivity() {
             }
         }
 
-    private fun ordenarProdutosPorCheck() {
+    private fun orderableProducts() {
         viewModel.produtos.value?.let { produtos ->
-            val produtosOrdenados = produtos.sortedBy { it.isChecked }
-            produtoAdapter.updateList(produtosOrdenados)
+            val orderableProducts = produtos.sortedBy { it.isChecked }
+            produtoAdapter.updateList(orderableProducts)
         }
     }
 }

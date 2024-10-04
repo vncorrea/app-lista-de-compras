@@ -13,28 +13,25 @@ class ProdutoAdapter(
     inner class ProdutoViewHolder(val binding: ActivityProdutosBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(produto: ProdutoItem) {
-            binding.itemName.text = produto.nome
-            binding.itemDetails.text = "${produto.quantidade}, ${produto.unidade.nome}"
-
-            binding.itemCheck.setOnCheckedChangeListener(null)
-
-            binding.itemCheck.isChecked = produto.isChecked
-
-            binding.itemCheck.setOnCheckedChangeListener { _, isChecked ->
-                produto.isChecked = isChecked
-                onCheckChange(produto)
-            }
-
-            binding.root.setOnLongClickListener {
-                onLongClick?.invoke(produto)
-                true
+            binding.apply {
+                itemName.text = produto.nome
+                itemDetails.text = "${produto.quantidade}, ${produto.unidade.nome}"
+                itemCheck.setOnCheckedChangeListener(null)
+                itemCheck.isChecked = produto.isChecked
+                itemCheck.setOnCheckedChangeListener { _, isChecked ->
+                    produto.isChecked = isChecked
+                    onCheckChange(produto)
+                }
+                root.setOnLongClickListener {
+                    onLongClick?.invoke(produto)
+                    true
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProdutoViewHolder {
-        val binding =
-            ActivityProdutosBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ActivityProdutosBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProdutoViewHolder(binding)
     }
 
@@ -45,8 +42,10 @@ class ProdutoAdapter(
     override fun getItemCount(): Int = produtos.size
 
     fun updateList(newList: List<ProdutoItem>) {
-        produtos.clear()
-        produtos.addAll(newList)
+        produtos.apply {
+            clear()
+            addAll(newList)
+        }
         notifyDataSetChanged()
     }
 }
