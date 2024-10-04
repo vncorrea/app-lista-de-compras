@@ -12,11 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Listadecompras"
         tools:targetApi="31">
+        <activity android:name="com.example.lista_de_compras.ui.products_list.ProductsListActivity" />
+        <activity android:name="com.example.lista_de_compras.ui.create.CreateListActivity" />
+        <activity android:name="com.example.lista_de_compras.ui.shopping_products.ShoppingProductsActivity" />
+        <activity android:name="com.example.lista_de_compras.ui.lists.ListsActivity" />
         <activity
-            android:name=".ListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.example.lista_de_compras.ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.example.lista_de_compras.ui.register.RegisterActivity"
             android:exported="true"></activity>
     </application>
 
