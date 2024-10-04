@@ -57,7 +57,7 @@ class ShoppingProductsActivity : AppCompatActivity() {
         val intent = Intent().apply {
             putExtra(
                 "delete_product",
-                deleteProdutoItem(productForEditing!!)
+                deleteShoppingProduct(productForEditing!!)
             )
         }
         setResult(RESULT_OK, intent)
@@ -65,16 +65,16 @@ class ShoppingProductsActivity : AppCompatActivity() {
     }
 
     private fun handleAddButtonClick() {
-        val nome = binding.inputNome.text.toString()
+        val name = binding.inputName.text.toString()
         val quantidade = binding.etQuantity.text.toString().toIntOrNull() ?: 0
         val unidade = binding.spUnity.selectedItem.toString()
         val categoria = binding.spCategory.selectedItem.toString()
 
-        if (nome.isNotEmpty() && quantidade > 0) {
+        if (name.isNotEmpty() && quantidade > 0) {
             val intent = Intent().apply {
                 putExtra(
                     if (isEditing) "edit_product" else "new_product",
-                    createProdutoItem(nome, quantidade, unidade, categoria)
+                    createShoppingProduct(name, quantidade, unidade, categoria)
                 )
             }
             setResult(RESULT_OK, intent)
@@ -84,12 +84,12 @@ class ShoppingProductsActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteProdutoItem(produto: ShoppingProducts): ShoppingProducts {
-        return produto
+    private fun deleteShoppingProduct(product: ShoppingProducts): ShoppingProducts {
+        return product
     }
 
-    private fun createProdutoItem(
-        nome: String,
+    private fun createShoppingProduct(
+        name: String,
         quantity: Int,
         unity: String,
         category: String
@@ -97,7 +97,7 @@ class ShoppingProductsActivity : AppCompatActivity() {
         return ShoppingProducts(
             id = if (isEditing) productForEditing?.id
                 ?: 0 else UUID.randomUUID().mostSignificantBits.toInt(),
-            nome = nome,
+            name = name,
             quantity = quantity,
             unity = ShoppingProductsUnity.findUnidade(unity),
             isChecked = productForEditing?.isChecked ?: false,
@@ -106,27 +106,27 @@ class ShoppingProductsActivity : AppCompatActivity() {
     }
 
     private fun showInputErrors() {
-        binding.inputNome.error = "Campo obrigatório"
+        binding.inputName.error = "Campo obrigatório"
         binding.etQuantity.error = "Campo obrigatório"
     }
 
-    private fun preparingEdition(produto: ShoppingProducts) {
-        binding.inputNome.setText(produto.nome)
-        binding.etQuantity.setText(produto.quantity.toString())
+    private fun preparingEdition(product: ShoppingProducts) {
+        binding.inputName.setText(product.name)
+        binding.etQuantity.setText(product.quantity.toString())
         binding.spCategory.setSelection(
             getIndexCategoryForItem(
-                produto.category.name,
+                product.category.name,
                 ShoppingProductsCategory.createCategories()
             )
         )
         binding.spUnity.setSelection(
             getIndexUnityForItem(
-                produto.unity.name,
+                product.unity.name,
                 ShoppingProductsUnity.createUnities()
             )
         )
         binding.btnAdd.text = "Salvar"
-        binding.tvTitle.text = "Editar Produto"
+        binding.tvTitle.text = "Editar product"
         binding.fabDelete.show();
     }
 

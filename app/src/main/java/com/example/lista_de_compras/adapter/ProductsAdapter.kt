@@ -14,7 +14,7 @@ class ProductsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: ShoppingProducts) {
             binding.apply {
-                itemName.text = product.nome
+                itemName.text = product.name
                 itemDetails.text = "${product.quantity}, ${product.unity.name}"
                 itemCheck.setOnCheckedChangeListener(null)
                 itemCheck.isChecked = product.isChecked

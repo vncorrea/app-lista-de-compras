@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class ShoppingProducts(
     val id: Int,
-    val nome: String,
+    val name: String,
     val quantity: Int,
     val unity: ShoppingProductsUnity,
     var isChecked: Boolean,

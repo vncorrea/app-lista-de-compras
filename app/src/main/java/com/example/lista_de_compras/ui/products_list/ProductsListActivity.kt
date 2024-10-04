@@ -3,6 +3,8 @@ package com.example.lista_de_compras.ui.products_list
 import ProductsAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +18,7 @@ class ProductsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShoppingProductsListBinding
     private lateinit var productAdapter: ProductsAdapter
     private lateinit var viewModel: ShoppingProductsViewModel
+    private var allProducts: List<ShoppingProducts> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +33,9 @@ class ProductsListActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         productAdapter = ProductsAdapter(mutableListOf()) { orderableProducts() }
-        productAdapter.onLongClick = { produto ->
+        productAdapter.onLongClick = { product ->
             val intent = Intent(this, ShoppingProductsActivity::class.java)
-            intent.putExtra("edit_product", produto)
+            intent.putExtra("edit_product", product)
             resultLauncher.launch(intent)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -41,6 +44,7 @@ class ProductsListActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.products.observe(this) { products ->
+            allProducts = products
             productAdapter.updateList(products)
         }
         viewModel.getProducts()
@@ -51,6 +55,19 @@ class ProductsListActivity : AppCompatActivity() {
             val intent = Intent(this, ShoppingProductsActivity::class.java)
             resultLauncher.launch(intent)
         }
+
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterProducts(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun filterProducts(query: String) {
+        val filteredProducts = allProducts.filter { it.name.contains(query, ignoreCase = true) }
+        productAdapter.updateList(filteredProducts)
     }
 
     private val resultLauncher =
