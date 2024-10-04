@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lista_de_compras.databinding.ActivityLoginBinding
-import com.example.lista_de_compras.ui.lista_produtos.ListaProdutosActivity
+import com.example.lista_de_compras.ui.products_list.ProductsListActivity
 import com.example.lista_de_compras.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
 
         if (email == "admin@admin.com" && password == "admin") {
-            startActivity(Intent(this, ListaProdutosActivity::class.java))
+            startActivity(Intent(this, ProductsListActivity::class.java))
         } else {
             showLoginError()
         }
