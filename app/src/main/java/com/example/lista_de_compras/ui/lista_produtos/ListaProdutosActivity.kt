@@ -29,6 +29,13 @@ class ListaProdutosActivity : AppCompatActivity() {
             ordenarProdutosPorCheck()
         }
 
+        // Configurar o evento de clique longo
+        produtoAdapter.onLongClick = { produto ->
+            val intent = Intent(this, CriarProdutoItemActivity::class.java)
+            intent.putExtra("produto_editar", produto) // Passa o produto clicado
+            resultLauncher.launch(intent)
+        }
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = produtoAdapter
 

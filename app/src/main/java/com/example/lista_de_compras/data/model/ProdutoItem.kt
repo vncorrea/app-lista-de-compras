@@ -4,13 +4,10 @@ import ProdutoItemCategoria
 import ProdutoItemUnidade
 import java.io.Serializable
 
-class ProdutoItem(
-    var id: String,
-    var nome: String,
-    var quantidade: Int,
-    var unidade: ProdutoItemUnidade,
+data class ProdutoItem(
+    val nome: String,
+    val quantidade: Int,
+    val unidade: ProdutoItemUnidade,
     var isChecked: Boolean,
-    var categoria: ProdutoItemCategoria
-): Serializable {
-
-}
+    val categoria: ProdutoItemCategoria
+) : Serializable

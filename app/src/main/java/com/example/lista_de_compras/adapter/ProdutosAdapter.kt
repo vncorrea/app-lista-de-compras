@@ -6,8 +6,8 @@ import com.example.lista_de_compras.data.model.ProdutoItem
 import com.example.lista_de_compras.databinding.ActivityProdutosBinding
 
 class ProdutoAdapter(
-private var produtos: MutableList<ProdutoItem>,
-private val onCheckChange: (ProdutoItem) -> Unit
+    private var produtos: MutableList<ProdutoItem>,
+    private val onCheckChange: (ProdutoItem) -> Unit
 ) : RecyclerView.Adapter<ProdutoAdapter.ProdutoViewHolder>() {
     var onLongClick: ((ProdutoItem) -> Unit)? = null
 
@@ -26,6 +26,7 @@ private val onCheckChange: (ProdutoItem) -> Unit
                 onCheckChange(produto)
             }
 
+            // Evento de clique longo
             binding.root.setOnLongClickListener {
                 onLongClick?.invoke(produto)
                 true
