@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">lista-de-compras</string>
+    <string name="textPlus">+</string>
+
+    <string-array name="unidades">
+        <item>un</item>
+        <item>kg</item>
+        <item>g</item>
+    </string-array>
 </resources>
