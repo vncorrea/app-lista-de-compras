@@ -60,14 +60,16 @@ class ListaProdutosActivity : AppCompatActivity() {
                 result.data?.let { data ->
                     val newProduct = data.getSerializableExtra("novo_produto") as? ProdutoItem
                     val editableProduct = data.getSerializableExtra("produto_editado") as? ProdutoItem
+                    val deletedProduct = data.getSerializableExtra("excluir_produto") as? ProdutoItem
 
-                    Log.d("ListaProdutosActivityNovo", "newProduct: $newProduct")
-                    Log.d("ListaProdutosActivityEditar", "editableProduct: $editableProduct")
+                    Log.d("deletedProduct", "deletedProduct: $deletedProduct")
 
                     if (editableProduct != null) {
                         viewModel.update(editableProduct)
                     } else if (newProduct != null) {
-                        viewModel.adicionarProduto(newProduct)
+                        viewModel.add(newProduct)
+                    } else if (deletedProduct != null) {
+                        viewModel.remove(deletedProduct)
                     }
 
                     viewModel.getProdutos()

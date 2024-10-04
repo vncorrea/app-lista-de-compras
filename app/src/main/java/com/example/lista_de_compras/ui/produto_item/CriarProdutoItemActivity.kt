@@ -28,6 +28,7 @@ class CriarProdutoItemActivity : AppCompatActivity() {
         checkForEditing()
 
         binding.btnAdicionar.setOnClickListener { handleAddButtonClick() }
+        binding.fabExcluir.setOnClickListener { handleDeleteButtonClick() }
     }
 
     private fun setupSpinners() {
@@ -48,8 +49,19 @@ class CriarProdutoItemActivity : AppCompatActivity() {
         produtoParaEditar = intent.getSerializableExtra("produto_editar") as? ProdutoItem
         if (produtoParaEditar != null) {
             isEditing = true
-            preencherCamposComProduto(produtoParaEditar!!)
+            preparingEdition(produtoParaEditar!!)
         }
+    }
+
+    private fun handleDeleteButtonClick() {
+        val intent = Intent().apply {
+            putExtra(
+                "excluir_produto",
+                deleteProdutoItem(produtoParaEditar!!)
+            )
+        }
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     private fun handleAddButtonClick() {
@@ -72,9 +84,19 @@ class CriarProdutoItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun createProdutoItem(nome: String, quantidade: Int, unidade: String, categoria: String): ProdutoItem {
+    private fun deleteProdutoItem(produto: ProdutoItem): ProdutoItem {
+        return produto
+    }
+
+    private fun createProdutoItem(
+        nome: String,
+        quantidade: Int,
+        unidade: String,
+        categoria: String
+    ): ProdutoItem {
         return ProdutoItem(
-            id = if (isEditing) produtoParaEditar?.id ?: 0 else UUID.randomUUID().mostSignificantBits.toInt(),
+            id = if (isEditing) produtoParaEditar?.id
+                ?: 0 else UUID.randomUUID().mostSignificantBits.toInt(),
             nome = nome,
             quantidade = quantidade,
             unidade = ProdutoItemUnidade.findUnidade(unidade),
@@ -88,16 +110,30 @@ class CriarProdutoItemActivity : AppCompatActivity() {
         binding.etQuantidade.error = "Campo obrigatório"
     }
 
-    private fun preencherCamposComProduto(produto: ProdutoItem) {
+    private fun preparingEdition(produto: ProdutoItem) {
         binding.inputNome.setText(produto.nome)
         binding.etQuantidade.setText(produto.quantidade.toString())
-        binding.spCategoria.setSelection(getIndexCategoryForItem(produto.categoria.nome, ProdutoItemCategoria.createCategorias()))
-        binding.spUnidade.setSelection(getIndexUnityForItem(produto.unidade.nome, ProdutoItemUnidade.createUnidades()))
+        binding.spCategoria.setSelection(
+            getIndexCategoryForItem(
+                produto.categoria.nome,
+                ProdutoItemCategoria.createCategorias()
+            )
+        )
+        binding.spUnidade.setSelection(
+            getIndexUnityForItem(
+                produto.unidade.nome,
+                ProdutoItemUnidade.createUnidades()
+            )
+        )
         binding.btnAdicionar.text = "Salvar"
         binding.tvTitulo.text = "Editar Produto"
+        binding.fabExcluir.show();
     }
 
-    private fun getIndexCategoryForItem(nome: String, createCategorias: List<ProdutoItemCategoria>): Int {
+    private fun getIndexCategoryForItem(
+        nome: String,
+        createCategorias: List<ProdutoItemCategoria>
+    ): Int {
         return createCategorias.indexOfFirst { it.nome == nome }
     }
 

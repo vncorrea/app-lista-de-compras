@@ -1,5 +1,6 @@
 package com.example.lista_de_compras.data.repository
 
+import android.util.Log
 import com.example.lista_de_compras.data.model.ProdutoItem
 
 class ProdutoItemRepository {
@@ -14,7 +15,10 @@ class ProdutoItemRepository {
     }
 
     fun remove(produtoItem: ProdutoItem) {
-        produtos.remove(produtoItem)
+        val index = produtos.indexOfFirst { it.id == produtoItem.id }
+        if (index != -1) {
+            produtos.removeAt(index)
+        }
     }
 
     fun update(produtoItem: ProdutoItem) {

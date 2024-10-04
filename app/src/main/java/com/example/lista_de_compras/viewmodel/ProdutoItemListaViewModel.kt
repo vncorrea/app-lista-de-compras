@@ -11,7 +11,7 @@ class ProdutoItemListaViewModel : ViewModel() {
     private val _produtos = MutableLiveData<MutableList<ProdutoItem>>(mutableListOf())
     val produtos: LiveData<MutableList<ProdutoItem>> = _produtos
 
-    fun adicionarProduto(produtoItem: ProdutoItem) {
+    fun add(produtoItem: ProdutoItem) {
         repository.add(produtoItem)
         _produtos.value = repository.getAll().toMutableList()
     }
@@ -20,7 +20,7 @@ class ProdutoItemListaViewModel : ViewModel() {
         _produtos.value = repository.getAll().toMutableList()
     }
 
-    fun removerProduto(produtoItem: ProdutoItem) {
+    fun remove(produtoItem: ProdutoItem) {
         repository.remove(produtoItem)
         _produtos.value = repository.getAll().toMutableList()
     }
