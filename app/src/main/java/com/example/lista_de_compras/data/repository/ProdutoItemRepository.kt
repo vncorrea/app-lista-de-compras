@@ -1,6 +1,5 @@
 package com.example.lista_de_compras.data.repository
 
-import android.util.Log
 import com.example.lista_de_compras.data.model.ProdutoItem
 
 class ProdutoItemRepository {
@@ -8,11 +7,9 @@ class ProdutoItemRepository {
 
     fun add(produtoItem: ProdutoItem) {
         produtos.add(produtoItem)
-        Log.d("ProdutoItemRepository", "Produto adicionado: $produtoItem")
     }
 
     fun getAll(): List<ProdutoItem> {
-        Log.d("ProdutoItemRepository", "Produtos retornados: $produtos")
         return produtos
     }
 
@@ -21,7 +18,7 @@ class ProdutoItemRepository {
     }
 
     fun update(produtoItem: ProdutoItem) {
-        val index = produtos.indexOfFirst { it.nome == produtoItem.nome }
+        val index = produtos.indexOfFirst { it.id == produtoItem.id }
         if (index != -1) {
             produtos[index] = produtoItem
         }

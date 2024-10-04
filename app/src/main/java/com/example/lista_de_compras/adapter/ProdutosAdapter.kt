@@ -1,4 +1,3 @@
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +25,6 @@ class ProdutoAdapter(
                 onCheckChange(produto)
             }
 
-            // Evento de clique longo
             binding.root.setOnLongClickListener {
                 onLongClick?.invoke(produto)
                 true

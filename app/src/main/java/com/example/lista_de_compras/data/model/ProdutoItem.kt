@@ -5,6 +5,7 @@ import ProdutoItemUnidade
 import java.io.Serializable
 
 data class ProdutoItem(
+    val id: Int,
     val nome: String,
     val quantidade: Int,
     val unidade: ProdutoItemUnidade,

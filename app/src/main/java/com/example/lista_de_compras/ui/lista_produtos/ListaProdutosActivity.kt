@@ -3,6 +3,7 @@ package com.example.lista_de_compras.ui.lista_produtos
 import ProdutoAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -22,17 +23,15 @@ class ListaProdutosActivity : AppCompatActivity() {
         binding = ActivityListaProdutosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializa o ViewModel
         viewModel = ViewModelProvider(this).get(ProdutoItemListaViewModel::class.java)
 
         produtoAdapter = ProdutoAdapter(mutableListOf()) { produto ->
             ordenarProdutosPorCheck()
         }
 
-        // Configurar o evento de clique longo
         produtoAdapter.onLongClick = { produto ->
             val intent = Intent(this, CriarProdutoItemActivity::class.java)
-            intent.putExtra("produto_editar", produto) // Passa o produto clicado
+            intent.putExtra("produto_editar", produto)
             resultLauncher.launch(intent)
         }
 
@@ -55,8 +54,18 @@ class ListaProdutosActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.let { data ->
-                    val novoProduto = data.getSerializableExtra("novo_produto") as ProdutoItem
-                    viewModel.adicionarProduto(novoProduto)
+                    val novoProduto = data.getSerializableExtra("novo_produto") as? ProdutoItem
+                    val produtoParaEditar = data.getSerializableExtra("produto_editado") as? ProdutoItem
+
+                    Log.d("ListaProdutosActivityNovo", "novoProduto: $novoProduto")
+                    Log.d("ListaProdutosActivityEditar", "produtoParaEditar: $produtoParaEditar")
+
+                    if (produtoParaEditar != null) {
+                        viewModel.update(produtoParaEditar)
+                    } else if (novoProduto != null) {
+                        viewModel.adicionarProduto(novoProduto)
+                    }
+
                     viewModel.getProdutos()
                 }
             }

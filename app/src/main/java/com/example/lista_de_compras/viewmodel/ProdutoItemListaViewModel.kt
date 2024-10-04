@@ -13,7 +13,6 @@ class ProdutoItemListaViewModel : ViewModel() {
 
     fun adicionarProduto(produtoItem: ProdutoItem) {
         repository.add(produtoItem)
-        // Atualizar a LiveData após adicionar o produto
         _produtos.value = repository.getAll().toMutableList()
     }
 
@@ -23,10 +22,10 @@ class ProdutoItemListaViewModel : ViewModel() {
 
     fun removerProduto(produtoItem: ProdutoItem) {
         repository.remove(produtoItem)
-        _produtos.value = repository.getAll().toMutableList() // Atualizar a lista após remover
+        _produtos.value = repository.getAll().toMutableList()
     }
 
-    fun atualizarProduto(produto: ProdutoItem) {
+    fun update(produto: ProdutoItem) {
         repository.update(produto)
         _produtos.value = repository.getAll().toMutableList()
     }

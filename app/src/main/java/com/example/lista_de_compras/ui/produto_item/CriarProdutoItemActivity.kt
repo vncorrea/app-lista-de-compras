@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.util.copy
 import com.example.lista_de_compras.data.model.ProdutoItem
 import com.example.lista_de_compras.databinding.ActivityCriarProdutoItemBinding
 import com.example.lista_de_compras.viewmodel.ProdutoItemListaViewModel
+import java.util.UUID
 
 class CriarProdutoItemActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCriarProdutoItemBinding
@@ -34,7 +34,6 @@ class CriarProdutoItemActivity : AppCompatActivity() {
         binding.spCategoria.adapter = adapterCategoria
         binding.spUnidade.adapter = adapterUnidade
 
-        // Verifica se estamos no modo de edição
         produtoParaEditar = intent.getSerializableExtra("produto_editar") as? ProdutoItem
         if (produtoParaEditar != null) {
             isEditing = true
@@ -49,24 +48,28 @@ class CriarProdutoItemActivity : AppCompatActivity() {
 
             if (nome.isNotEmpty() && quantidade > 0) {
                 val intent = Intent()
-                val produtoEditadoOuNovo = if (isEditing) {
-                    produtoParaEditar?.copy(
+                if (isEditing) {
+                    val produtoEditado = ProdutoItem(
+                        id = produtoParaEditar?.id ?: 0,
                         nome = nome,
                         quantidade = quantidade,
                         unidade = ProdutoItemUnidade.findUnidade(unidade),
+                        isChecked = produtoParaEditar?.isChecked ?: false,
                         categoria = ProdutoItemCategoria.findCategoria(categoria)
                     )
+                    intent.putExtra("produto_editado", produtoEditado)
                 } else {
-                    ProdutoItem(
+                    val produtoNovo = ProdutoItem(
+                        id = UUID.randomUUID().mostSignificantBits.toInt(),
                         nome = nome,
                         quantidade = quantidade,
                         unidade = ProdutoItemUnidade.findUnidade(unidade),
                         isChecked = false,
                         categoria = ProdutoItemCategoria.findCategoria(categoria)
                     )
+                    intent.putExtra("novo_produto", produtoNovo)
                 }
 
-                intent.putExtra("novo_produto", produtoEditadoOuNovo)
                 setResult(RESULT_OK, intent)
                 finish()
             } else {
@@ -74,6 +77,7 @@ class CriarProdutoItemActivity : AppCompatActivity() {
                 binding.etQuantidade.error = "Campo obrigatório"
             }
         }
+
     }
 
     private fun preencherCamposComProduto(produto: ProdutoItem) {
