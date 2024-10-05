@@ -51,6 +51,7 @@ class ProductsListActivity : AppCompatActivity() {
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = productAdapter
+        binding.tvTitleList.text = selectedList?.name
     }
 
     private fun setupObservers() {
