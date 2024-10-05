@@ -12,14 +12,10 @@
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
+            android:layout_width="69dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="wrap_content"
-            android:text="Listas"
-            android:layout_gravity="start"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:textColor="@android:color/white"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:drawableLeft="@drawable/ic_arrow_back" />
 
         <TextView
             android:id="@+id/tv_title"

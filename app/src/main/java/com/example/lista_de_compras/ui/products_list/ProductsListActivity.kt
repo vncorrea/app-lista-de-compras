@@ -62,10 +62,12 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        binding.btnBack.setOnClickListener { finish() }
         binding.addButton.setOnClickListener {
             val intent = Intent(this, ShoppingProductsActivity::class.java)
             intent.putExtra("selected_list", selectedList)
             resultLauncher.launch(intent)
+
         }
 
         binding.searchBar.addTextChangedListener(object : TextWatcher {
