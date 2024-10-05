@@ -21,7 +21,8 @@ class CreateListActivity : AppCompatActivity() {
         checkForEditing()
 
         binding.btnAdd.setOnClickListener { handleAddButtonClick() }
-//        binding.fabDelete.setOnClickListener { handleDeleteButtonClick() }
+        binding.fabDelete.setOnClickListener { handleDeleteButtonClick() }
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     private fun checkForEditing() {
@@ -84,6 +85,6 @@ class CreateListActivity : AppCompatActivity() {
         binding.etNomeLista.setText(list.name)
         binding.btnAdd.text = "Salvar"
         binding.tvTitle.text = "Editar lista"
-//        binding.fabDelete.show();
+        binding.fabDelete.show();
     }
 }
