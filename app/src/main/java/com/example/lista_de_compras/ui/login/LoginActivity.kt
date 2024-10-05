@@ -1,4 +1,4 @@
-package com.example.lista_de_compras.ui.login
+package com.example.lista_de_compras.ui.login;
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import com.example.lista_de_compras.databinding.ActivityLoginBinding
 import com.example.lista_de_compras.ui.products_list.ProductsListActivity
 import com.example.lista_de_compras.ui.register.RegisterActivity
 
-class LoginActivity : AppCompatActivity() {
+class aLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
