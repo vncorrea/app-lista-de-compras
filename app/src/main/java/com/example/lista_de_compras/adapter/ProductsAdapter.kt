@@ -16,6 +16,10 @@ class ProductsAdapter(
             binding.apply {
                 itemName.text = product.name
                 itemDetails.text = "${product.quantity}, ${product.unity.name}"
+                val categoryIconRes = ShoppingProductsCategory.getIconForCategory(product.category.name)
+                binding.categoryIcon.setImageResource(categoryIconRes)
+
+
                 itemCheck.setOnCheckedChangeListener(null)
                 itemCheck.isChecked = product.isChecked
                 itemCheck.setOnCheckedChangeListener { _, isChecked ->

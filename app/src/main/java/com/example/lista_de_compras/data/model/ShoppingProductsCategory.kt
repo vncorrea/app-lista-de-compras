@@ -1,3 +1,4 @@
+import com.example.lista_de_compras.R
 import java.io.Serializable
 
 class ShoppingProductsCategory(val name: String): Serializable {
@@ -17,6 +18,18 @@ class ShoppingProductsCategory(val name: String): Serializable {
                 ShoppingProductsCategory("Carboidrato"),
                 ShoppingProductsCategory("Outros")
             )
+        }
+
+        fun getIconForCategory(name: String): Int {
+            return when (name) {
+                "Fruta" -> R.drawable.ic_fruta
+                "Verdura" -> R.drawable.ic_verdura
+                "Carne" -> R.drawable.ic_carne
+                "Cereal" -> R.drawable.ic_cereal
+                "Laticínio" -> R.drawable.ic_laticinio
+                "Carboidrato" -> R.drawable.ic_carboidrato
+                else -> R.drawable.ic_outros
+            }
         }
 
         fun findCategory(name: String): ShoppingProductsCategory {
