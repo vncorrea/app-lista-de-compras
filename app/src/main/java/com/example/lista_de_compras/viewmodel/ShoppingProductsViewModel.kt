@@ -7,7 +7,7 @@ import com.example.lista_de_compras.data.model.ShoppingProducts
 import com.example.lista_de_compras.data.repository.ShoppingProductsRepository
 
 class ShoppingProductsViewModel : ViewModel() {
-    private val repository = ShoppingProductsRepository()
+    private val repository = ShoppingProductsRepository.getInstance();
     private val _products = MutableLiveData<MutableList<ShoppingProducts>>(mutableListOf())
     val products: LiveData<MutableList<ShoppingProducts>> = _products
 

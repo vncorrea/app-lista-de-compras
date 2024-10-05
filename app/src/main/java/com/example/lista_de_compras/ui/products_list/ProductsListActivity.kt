@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,12 +28,10 @@ class ProductsListActivity : AppCompatActivity() {
         binding = ActivityShoppingProductsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializa o ViewModel antes de chamar qualquer função dele
         viewModel = ViewModelProvider(this).get(ShoppingProductsViewModel::class.java)
 
         selectedList = intent.getSerializableExtra("selected_list") as? ShoppingList
 
-        // Carrega os produtos apenas da lista selecionada
         selectedList?.let {
             viewModel.getProductsByListId(it.id)
         }
@@ -101,10 +100,10 @@ class ProductsListActivity : AppCompatActivity() {
                         viewModel.remove(deletedProduct)
                     }
 
-                    // Recarrega os produtos da lista selecionada após alterações
                     selectedList?.let {
                         viewModel.getProductsByListId(it.id)
                     }
+
                     orderableProducts()
                 }
             }
