@@ -20,7 +20,6 @@ class ShoppingProductsRepository private constructor() {
     }
 
     fun add(shoppingProducts: ShoppingProducts) {
-        Log.d("ShoppingProductsRepository", "Adding product: ${shoppingProducts.name}")
         this.shoppingProducts.add(shoppingProducts)
     }
 

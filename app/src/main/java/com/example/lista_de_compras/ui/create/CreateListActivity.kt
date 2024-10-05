@@ -81,7 +81,6 @@ class CreateListActivity : AppCompatActivity() {
     }
 
     private fun preparingEdition(list: ShoppingList) {
-        Log.d("CreateListActivity", "preparingEdition: $list")
         binding.etNomeLista.setText(list.name)
         binding.btnAdd.text = "Salvar"
         binding.tvTitle.text = "Editar lista"

@@ -46,6 +46,7 @@ class ProductsListActivity : AppCompatActivity() {
         productAdapter.onLongClick = { product ->
             val intent = Intent(this, ShoppingProductsActivity::class.java)
             intent.putExtra("edit_product", product)
+            intent.putExtra("selected_list", selectedList)
             resultLauncher.launch(intent)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -53,7 +54,6 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        // Observa a lista de produtos filtrados pela lista selecionada
         viewModel.products.observe(this) { products ->
             allProducts = products
             productAdapter.updateList(products)
