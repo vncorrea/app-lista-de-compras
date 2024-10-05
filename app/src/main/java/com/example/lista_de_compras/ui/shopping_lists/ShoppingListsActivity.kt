@@ -4,6 +4,8 @@ import ListsAdapter
 import ShoppingList
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +16,7 @@ import com.example.lista_de_compras.databinding.ActivityShoppingListsBinding
 import com.example.lista_de_compras.ui.create.CreateListActivity
 import com.example.lista_de_compras.ui.products_list.ProductsListActivity
 import com.example.lista_de_compras.viewmodel.ShoppingListViewModel
+import java.util.Locale.filter
 
 class ShoppingListsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShoppingListsBinding
@@ -34,6 +37,8 @@ class ShoppingListsActivity : AppCompatActivity() {
         setupListeners()
     }
 
+
+
     private fun setupRecyclerView() {
         listsAdapter.onClick = { selectedList ->
             val intent = Intent(this, ProductsListActivity::class.java)
@@ -52,10 +57,25 @@ class ShoppingListsActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        binding.btnLogout.setOnClickListener { finish() }
         binding.addListButton.setOnClickListener {
             val intent = Intent(this, CreateListActivity::class.java)
             resultLauncher.launch(intent)
         }
+
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterShoppingLists(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun filterShoppingLists(query: String) {
+        val filteredProducts = allShoppingList.filter { it.name.contains(query, ignoreCase = true) }
+        listsAdapter.updateList(filteredProducts)
     }
 
     private fun setupObservers() {
@@ -63,6 +83,8 @@ class ShoppingListsActivity : AppCompatActivity() {
             allShoppingList = list
             listsAdapter.updateList(list)
         }
+
+
 
         viewModel.getLists()
     }

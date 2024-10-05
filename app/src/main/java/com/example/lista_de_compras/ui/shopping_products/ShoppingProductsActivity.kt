@@ -28,6 +28,7 @@ class ShoppingProductsActivity : AppCompatActivity() {
         setupSpinners()
         checkForEditing()
 
+        binding.btnBack.setOnClickListener { finish() }
         binding.btnAdd.setOnClickListener { handleAddButtonClick() }
         binding.fabDelete.setOnClickListener { handleDeleteButtonClick() }
     }

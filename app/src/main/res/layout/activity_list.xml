@@ -6,28 +6,6 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Botão de voltar com seta -->
-
-    <!-- Espaçamento entre o botão de voltar e o campo de pesquisa -->
-    <Button
-        android:id="@+id/btn_voltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/back"
-        />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="32dp" />
-
-    <!-- Campo de pesquisa -->
-    <EditText
-        android:id="@+id/et_pesquisa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Pesquisar lista..." />
-
-    <!-- CardView com lista -->
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"

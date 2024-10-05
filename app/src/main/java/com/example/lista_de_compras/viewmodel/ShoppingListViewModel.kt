@@ -1,6 +1,7 @@
 package com.example.lista_de_compras.viewmodel
 
 import ShoppingList
+import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,4 +32,5 @@ class ShoppingListViewModel : ViewModel() {
         _lists.value = repository.getAll().toMutableList()
     }
 }
+
 

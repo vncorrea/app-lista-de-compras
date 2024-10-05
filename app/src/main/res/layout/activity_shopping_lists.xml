@@ -12,12 +12,12 @@
 
         <Button
             android:id="@+id/btnLogout"
-            android:layout_width="67dp"
-            android:layout_height="49dp"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:drawableLeft="@drawable/logout_scaled"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableLeft="@drawable/ic_logout"
             android:padding="8dp"
             android:textColor="@android:color/white" />
 
@@ -30,6 +30,15 @@
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="16dp" />
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Procure por sua lista"
+            android:padding="12dp"
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="16dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
