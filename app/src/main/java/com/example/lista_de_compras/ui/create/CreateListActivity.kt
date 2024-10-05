@@ -1,46 +1,88 @@
 package com.example.lista_de_compras.ui.create
 
-import ProductsAdapter
-import android.app.Activity
+import ShoppingList
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lista_de_compras.R
-import com.example.lista_de_compras.data.model.ShoppingProducts
-import com.example.lista_de_compras.databinding.ActivityShoppingProductsListBinding
-import com.example.lista_de_compras.ui.shopping_products.ShoppingProductsActivity
-import com.example.lista_de_compras.viewmodel.ShoppingProductsViewModel
+import com.example.lista_de_compras.databinding.ActivityCreatelistBinding
+import java.util.UUID
 
 class CreateListActivity : AppCompatActivity() {
-
-    private lateinit var listTitleEditText: EditText
-    private lateinit var createButton: Button
+    private lateinit var binding: ActivityCreatelistBinding
+    private var isEditing = false
+    private var listForEditing: ShoppingList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_createlist)
+        binding = ActivityCreatelistBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        listTitleEditText = findViewById(R.id.listTitleEditText)
-        createButton = findViewById(R.id.createButton)
+        checkForEditing()
 
-        createButton.setOnClickListener {
-            val newListTitle = listTitleEditText.text.toString()
-            if (newListTitle.isNotEmpty()) {
-                val resultIntent = Intent()
-                resultIntent.putExtra("newListTitle", newListTitle)
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish() // Volta para ListsActivity
-            } else {
-                Toast.makeText(this, "Por favor, insira o nome da lista.", Toast.LENGTH_SHORT).show()
-            }
+        binding.btnAdd.setOnClickListener { handleAddButtonClick() }
+//        binding.fabDelete.setOnClickListener { handleDeleteButtonClick() }
+    }
+
+    private fun checkForEditing() {
+        listForEditing = intent.getSerializableExtra("edit_product") as? ShoppingList
+        if (listForEditing != null) {
+            isEditing = true
+            preparingEdition(listForEditing!!)
         }
+    }
+
+    private fun handleDeleteButtonClick() {
+        val intent = Intent().apply {
+            putExtra(
+                "delete_list",
+                deleteShoppingProduct(listForEditing!!)
+            )
+        }
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
+    private fun handleAddButtonClick() {
+        val name = binding.etNomeLista.text.toString()
+
+        if (name.isNotEmpty()) {
+            val intent = Intent().apply {
+                putExtra(
+                    if (isEditing) "edit_list" else "new_list",
+                    createList(name)
+                )
+            }
+            setResult(RESULT_OK, intent)
+            finish()
+        } else {
+            showInputErrors()
+        }
+    }
+
+    private fun deleteShoppingProduct(list: ShoppingList): ShoppingList {
+        return list
+    }
+
+    private fun createList(
+        name: String
+    ): ShoppingList {
+        return ShoppingList(
+            id = if (isEditing) listForEditing?.id
+                ?: 0 else UUID.randomUUID().mostSignificantBits.toInt(),
+            name = name,
+            picture = null,
+        )
+    }
+
+    private fun showInputErrors() {
+        binding.etNomeLista.error = "Campo obrigatório"
+    }
+
+    private fun preparingEdition(list: ShoppingList) {
+        binding.etNomeLista.setText(list.name)
+        binding.btnAdd.text = "Salvar"
+        binding.tvTitle.text = "Editar lista"
+//        binding.fabDelete.show();
     }
 }

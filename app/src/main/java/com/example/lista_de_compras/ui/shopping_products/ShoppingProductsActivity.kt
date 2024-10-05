@@ -15,7 +15,6 @@ import java.util.UUID
 
 class ShoppingProductsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShoppingProductsBinding
-    private val viewModel: ShoppingProductsViewModel by viewModels()
     private var isEditing = false
     private var productForEditing: ShoppingProducts? = null
 
