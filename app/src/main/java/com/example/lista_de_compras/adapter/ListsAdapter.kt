@@ -13,6 +13,11 @@ class ListsAdapter(
         fun bind(list: ShoppingList) {
             binding.apply {
                 tvNomeListaFeira.text = list.name
+
+                root.setOnLongClickListener {
+                    onLongClick?.invoke(list)
+                    true
+                }
             }
         }
     }

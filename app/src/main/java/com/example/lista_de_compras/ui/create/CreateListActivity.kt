@@ -25,7 +25,7 @@ class CreateListActivity : AppCompatActivity() {
     }
 
     private fun checkForEditing() {
-        listForEditing = intent.getSerializableExtra("edit_product") as? ShoppingList
+        listForEditing = intent.getSerializableExtra("edit_list") as? ShoppingList
         if (listForEditing != null) {
             isEditing = true
             preparingEdition(listForEditing!!)
@@ -80,6 +80,7 @@ class CreateListActivity : AppCompatActivity() {
     }
 
     private fun preparingEdition(list: ShoppingList) {
+        Log.d("CreateListActivity", "preparingEdition: $list")
         binding.etNomeLista.setText(list.name)
         binding.btnAdd.text = "Salvar"
         binding.tvTitle.text = "Editar lista"

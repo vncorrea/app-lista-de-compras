@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lista_de_compras.databinding.ActivityShoppingListsBinding
 import com.example.lista_de_compras.ui.create.CreateListActivity
-import com.example.lista_de_compras.ui.shopping_products.ShoppingProductsActivity
 import com.example.lista_de_compras.viewmodel.ShoppingListViewModel
 
 class ShoppingListsActivity : AppCompatActivity() {
@@ -36,7 +35,7 @@ class ShoppingListsActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         listsAdapter = ListsAdapter(mutableListOf())
         listsAdapter.onLongClick = { list ->
-            val intent = Intent(this, ShoppingProductsActivity::class.java)
+            val intent = Intent(this, CreateListActivity::class.java)
             intent.putExtra("edit_list", list)
             resultLauncher.launch(intent)
         }
@@ -56,6 +55,7 @@ class ShoppingListsActivity : AppCompatActivity() {
             allShoppingList = list
             listsAdapter.updateList(list)
         }
+
         viewModel.getLists()
     }
 
@@ -81,8 +81,4 @@ class ShoppingListsActivity : AppCompatActivity() {
                 }
             }
         }
-
-    companion object {
-        const val CREATE_LIST_REQUEST_CODE = 2
-    }
 }

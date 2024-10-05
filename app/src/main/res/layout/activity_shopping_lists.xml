@@ -21,7 +21,6 @@
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
 
-
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -34,8 +33,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             app:layout_constraintBottom_toTopOf="@id/addListButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:iconSize="24dp"
-        />
+        app:iconSize="24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
