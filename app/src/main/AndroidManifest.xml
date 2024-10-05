@@ -21,20 +21,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.products_list.ProductsListActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".ui.lists.ListsActivity"
+            android:exported="true"></activity>
 
         <activity
             android:name=".ui.register.RegisterActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.shopping_products.ShoppingProductsActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnLists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listas"
+        android:layout_gravity="start"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicionar Nova Lista"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp" />
+
+
+    <EditText
+        android:id="@+id/et_nome_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome da nova lista"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:layout_marginBottom="16dp" />
+
+
+    <Button
+        android:id="@+id/btn_adicionar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Adicionar"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>
