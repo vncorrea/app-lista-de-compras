@@ -1,5 +1,6 @@
 package com.example.lista_de_compras.ui.shopping_products
 
+import ShoppingList
 import ShoppingProductsCategory
 import ShoppingProductsUnity
 import android.R
@@ -69,11 +70,13 @@ class ShoppingProductsActivity : AppCompatActivity() {
         val unidade = binding.spUnity.selectedItem.toString()
         val categoria = binding.spCategory.selectedItem.toString()
 
-        if (name.isNotEmpty() && quantidade > 0) {
+        val selectedList = intent.getSerializableExtra("selected_list") as? ShoppingList
+
+        if (name.isNotEmpty() && quantidade > 0 && selectedList != null) {
             val intent = Intent().apply {
                 putExtra(
                     if (isEditing) "edit_product" else "new_product",
-                    createShoppingProduct(name, quantidade, unidade, categoria)
+                    createShoppingProduct(name, quantidade, unidade, categoria, selectedList)
                 )
             }
             setResult(RESULT_OK, intent)
@@ -91,7 +94,8 @@ class ShoppingProductsActivity : AppCompatActivity() {
         name: String,
         quantity: Int,
         unity: String,
-        category: String
+        category: String,
+        list: ShoppingList
     ): ShoppingProducts {
         return ShoppingProducts(
             id = if (isEditing) productForEditing?.id
@@ -100,7 +104,8 @@ class ShoppingProductsActivity : AppCompatActivity() {
             quantity = quantity,
             unity = ShoppingProductsUnity.findUnidade(unity),
             isChecked = productForEditing?.isChecked ?: false,
-            category = ShoppingProductsCategory.findCategory(category)
+            category = ShoppingProductsCategory.findCategory(category),
+            list = list
         )
     }
 

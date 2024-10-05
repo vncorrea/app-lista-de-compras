@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lista_de_compras.databinding.ActivityShoppingListsBinding
 import com.example.lista_de_compras.ui.create.CreateListActivity
+import com.example.lista_de_compras.ui.products_list.ProductsListActivity
 import com.example.lista_de_compras.viewmodel.ShoppingListViewModel
 
 class ShoppingListsActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class ShoppingListsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(ShoppingListViewModel::class.java)
+        listsAdapter = ListsAdapter(mutableListOf())
 
         setupRecyclerView()
         setupObservers()
@@ -33,12 +35,18 @@ class ShoppingListsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        listsAdapter = ListsAdapter(mutableListOf())
-        listsAdapter.onLongClick = { list ->
+        listsAdapter.onClick = { selectedList ->
+            val intent = Intent(this, ProductsListActivity::class.java)
+            intent.putExtra("selected_list", selectedList)
+            startActivity(intent)
+        }
+
+        listsAdapter.onLongClick = { selectedList ->
             val intent = Intent(this, CreateListActivity::class.java)
-            intent.putExtra("edit_list", list)
+            intent.putExtra("edit_list", selectedList)
             resultLauncher.launch(intent)
         }
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = listsAdapter
     }

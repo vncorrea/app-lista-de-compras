@@ -7,6 +7,7 @@ class ListsAdapter(
     private var shoppingList: MutableList<ShoppingList>,
 ) : RecyclerView.Adapter<ListsAdapter.listsViewHolder>() {
     var onLongClick: ((ShoppingList) -> Unit)? = null
+    var onClick: ((ShoppingList) -> Unit)? = null
 
     inner class listsViewHolder(val binding: ActivityListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -17,6 +18,10 @@ class ListsAdapter(
                 root.setOnLongClickListener {
                     onLongClick?.invoke(list)
                     true
+                }
+
+                root.setOnClickListener {
+                    onClick?.invoke(list)
                 }
             }
         }

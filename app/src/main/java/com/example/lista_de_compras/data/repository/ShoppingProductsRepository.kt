@@ -13,6 +13,10 @@ class ShoppingProductsRepository {
         return shoppingProducts
     }
 
+    fun getProductsByListId(listId: Int): List<ShoppingProducts> {
+        return shoppingProducts.filter { it.id == listId }
+    }
+
     fun remove(shoppingProducts: ShoppingProducts) {
         val index = this.shoppingProducts.indexOfFirst { it.id == shoppingProducts.id }
         if (index != -1) {

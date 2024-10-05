@@ -1,6 +1,7 @@
 package com.example.lista_de_compras.ui.products_list
 
 import ProductsAdapter
+import ShoppingList
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -19,13 +20,23 @@ class ProductsListActivity : AppCompatActivity() {
     private lateinit var productAdapter: ProductsAdapter
     private lateinit var viewModel: ShoppingProductsViewModel
     private var allProducts: List<ShoppingProducts> = listOf()
+    private var selectedList: ShoppingList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShoppingProductsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Inicializa o ViewModel antes de chamar qualquer função dele
         viewModel = ViewModelProvider(this).get(ShoppingProductsViewModel::class.java)
+
+        selectedList = intent.getSerializableExtra("selected_list") as? ShoppingList
+
+        // Carrega os produtos apenas da lista selecionada
+        selectedList?.let {
+            viewModel.getProductsByListId(it.id)
+        }
+
         setupRecyclerView()
         setupObservers()
         setupListeners()
@@ -43,16 +54,17 @@ class ProductsListActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
+        // Observa a lista de produtos filtrados pela lista selecionada
         viewModel.products.observe(this) { products ->
             allProducts = products
             productAdapter.updateList(products)
         }
-        viewModel.getProducts()
     }
 
     private fun setupListeners() {
         binding.addButton.setOnClickListener {
             val intent = Intent(this, ShoppingProductsActivity::class.java)
+            intent.putExtra("selected_list", selectedList)
             resultLauncher.launch(intent)
         }
 
@@ -61,6 +73,7 @@ class ProductsListActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filterProducts(s.toString())
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -88,7 +101,10 @@ class ProductsListActivity : AppCompatActivity() {
                         viewModel.remove(deletedProduct)
                     }
 
-                    viewModel.getProducts()
+                    // Recarrega os produtos da lista selecionada após alterações
+                    selectedList?.let {
+                        viewModel.getProductsByListId(it.id)
+                    }
                     orderableProducts()
                 }
             }

@@ -20,6 +20,10 @@ class ShoppingProductsViewModel : ViewModel() {
         _products.value = repository.getAll().toMutableList()
     }
 
+    fun getProductsByListId(listId: Int) {
+        _products.value = repository.getProductsByListId(listId).toMutableList()
+    }
+
     fun remove(shoppingProducts: ShoppingProducts) {
         repository.remove(shoppingProducts)
         _products.value = repository.getAll().toMutableList()
