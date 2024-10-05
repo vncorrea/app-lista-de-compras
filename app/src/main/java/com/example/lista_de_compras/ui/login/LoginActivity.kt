@@ -7,7 +7,7 @@ import com.example.lista_de_compras.databinding.ActivityLoginBinding
 import com.example.lista_de_compras.ui.products_list.ProductsListActivity
 import com.example.lista_de_compras.ui.register.RegisterActivity
 
-class aLoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
